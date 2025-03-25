@@ -1,0 +1,52 @@
+name: Coding Standards
+
+on:
+  pull_request:
+    branches:
+      - master
+      - stage
+      - development
+
+  workflow_dispatch:
+
+jobs:
+  php:
+    name: Lint PHP files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source branch.
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install Composer Dependencies
+        run: composer install
+
+      - name: Run Lint
+        run: composer lint
+  js:
+    name: Lint JS, JSON & CSS files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source branch.
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install NPM dependencies for the RV Starter theme
+        run: npm --prefix themes/rv-starter install
+
+      - name: Run JS Lint
+        run: npm run lint:theme:js
+
+      - name: Run JSON Lint
+        run: npm run lint:theme:json
+
+      - name: Run CSS Lint
+        run: npm run lint:theme:css

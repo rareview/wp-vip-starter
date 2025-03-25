@@ -1,0 +1,69 @@
+{
+    "name": "rareview/rv-starter",
+    "description": "RV Starter WordPress",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "repositories": {
+        "vip-go-mu-plugins": {
+            "type": "vcs",
+            "url": "https://github.com/automattic/vip-go-mu-plugins-built"
+        },
+        "wpackagist": {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "process-timeout": 600,
+        "preferred-install": "dist",
+        "vendor-dir": "client-mu-plugins/vendor",
+        "platform-check": false,
+        "platform": {
+            "php": "8.2"
+        },
+        "allow-plugins": {
+            "composer/installers": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "require": {
+        "php": ">= 8.2",
+        "composer/installers": "^2.1",
+        "wpackagist-theme/twentytwentyfour": "1.1"
+    },
+    "require-dev": {
+        "automattic/vip-go-mu-plugins": "dev-master",
+        "automattic/vipwpcs": "^3.0",
+        "wpackagist-plugin/debug-bar": "1.1.6",
+        "wpackagist-plugin/query-monitor": "3.15",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "phpcompatibility/phpcompatibility-wp": "*",
+        "roave/security-advisories": "dev-latest"
+    },
+    "scripts": {
+        "config-cs": [
+            "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
+            "\"client-mu-plugins/vendor/bin/phpcs\" --config-set rv_starter_standard 'RV Starter Default'"
+        ],
+        "post-install-cmd": "@config-cs",
+        "post-update-cmd": "@config-cs",
+        "lint": "phpcs",
+        "format": "phpcbf"
+    },
+    "extra": {
+        "installer-paths": {
+            "plugins/{$name}": [
+                "type:wordpress-plugin"
+            ],
+            "themes/{$name}": [
+                "type:wordpress-theme"
+            ],
+            "client-mu-plugins/{$name}": [
+                "type:wordpress-muplugin"
+            ]
+        }
+    }
+}

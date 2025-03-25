@@ -1,0 +1,141 @@
+version: 2
+
+# Define the jobs we want to run for this project
+jobs:
+  lint:
+    docker:
+      - image: 10up/wordpress-ci:php-8.2
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Node 20.x
+          command: |
+            nvm install v20
+
+      - run:
+          name: Install Composer dependencies at the root
+          command: |
+            composer install
+
+      - run:
+          name: Install Composer dependencies in the "rv-starter" theme
+          command: |
+            composer --working-dir=themes/rv-starter install
+
+      - run:
+          name: Lint PHP code
+          command: |
+            composer lint
+
+      - run:
+          name: Install Node Dependencies and lint assets
+          command: |
+            nvm use v20
+            npm run setup:js
+
+      - run:
+          name: Lint JS files
+          command: |
+          	nvm use v20
+            npm run lint:theme:js
+
+      - run:
+          name: Lint JSON files
+          command: |
+          	nvm use v20
+            npm run lint:theme:json
+
+      - run:
+          name: Lint CSS files
+          command: |
+          	nvm use v20
+            npm run lint:theme:css
+
+  build:
+    docker:
+      - image: 10up/wordpress-ci:php-8.2
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Node 20.x
+          command: |
+            nvm install v20
+
+      - run:
+          name: Install Composer dependencies in the root of the project and the "rv-starter" theme
+          command: |
+            composer install --no-dev --prefer-dist --optimize-autoloader --no-scripts
+            composer install --no-dev --prefer-dist --optimize-autoloader --working-dir=themes/rv-starter
+
+      - run:
+          name: Install Node dependencies and build assets in the "rv-starter" theme.
+          command: |
+          	nvm use v20
+            npm install --prefix themes/rv-starter --ignore-scripts --platform=linux --arch=x64 sharp@0.32.6
+            npm rebuild --prefix themes/rv-starter --platform=linux --arch=x64 sharp
+            npm run --prefix themes/rv-starter build
+
+      - run:
+          name: Create build readme
+          command: |
+            mkdir build
+            touch README.md
+            echo "This was built in CI on $(date)" > build/README.md
+
+      - run:
+          name: Add some helpful info to the README
+          command: |
+            echo -e "\n\n## Continuous Integration & Continuous Deployment on VIP Go" >> build/README.md
+            echo -e "\nSee our docs in the [VIP Lobby](https://vip.wordpress.com/documentation/automated-build-and-deploy-on-vip-go/)" >> build/README.md
+            echo -e "\n\nThis branch e.g. master-built is created automatically when " >> build/README.md
+            echo "a commit or merge is made to the base branch e.g. master, using [your CircleCI configuration](../.circleci/config.yml), which you can **customize**" >> build/README.md
+
+      # Test to ensure the build was good, do not deploy bad stuff!
+      - run:
+          name: Test the build
+          command: |
+            if [ -f build/README.md ]; then
+              echo "Build succeeded";
+            else
+              echo "Build failed, file missing"; exit 1
+            fi
+
+      # Uncomment this and supply your ssh fingerprint to enable CircleCI to push the built branch to GitHub
+      - add_ssh_keys:
+          fingerprints:
+            - "29:5d:61:02:eb:14:0c:8f:55:e6:a6:98:18:e7:cc:46"
+
+      # Run the deploy:
+      # REQUIRED: If you're amended an existing config, the below are two
+      # of the required lines you must add
+      # This will push the result to the {currentbranch}-built branch
+      - deploy:
+          name: Deploy -built branch to github
+          command: bash <(curl -s
+            "https://raw.githubusercontent.com/Automattic/vip-go-build/master/deploy.sh")
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: medium
+
+# Orchestrate our job run sequence
+workflows:
+  version: 2
+  lint_and_build:
+    jobs:
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - /.*built.*/
+      - build:
+          filters:
+            branches:
+              only:
+                - development
+                - staging
+                - master
+          requires:
+            - lint

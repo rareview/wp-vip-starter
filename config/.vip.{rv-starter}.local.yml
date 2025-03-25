@@ -1,0 +1,4 @@
+#data_sync:
+#  domain_map:
+#    rv-starter.com: rv-starter.vipdev.lndo.site
+#    www.rv-starter.com: rv-starter.vipdev.lndo.site

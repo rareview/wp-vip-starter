@@ -1,0 +1,4 @@
+#data_sync:
+#  domain_map:
+#    rv-starter.com: rv-starter-development.go-vip.net
+#    www.rv-starter.com: rv-starter-development.go-vip.net

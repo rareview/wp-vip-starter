@@ -1,0 +1,53 @@
+# Local Development
+.local/site
+debug.log
+.idea
+
+# Build files.
+node_modules
+/client-mu-plugins/vendor/
+/vendor/
+/themes/rv-starter/dist/
+
+# Plugins
+/plugins/*
+!/plugins/wordpress-seo-premium
+!/plugins/wordpress-seo
+!/plugins/.gitkeep
+
+# Themes
+/themes/*
+!/themes/rv-starter
+!/themes/.gitkeep
+
+# Uploads directory
+/uploads/
+
+# Leftover core/plugin upgrade files
+/upgrade/
+
+# mu-plugins; these are managed at the platform-level
+/mu-plugins/
+
+# drop-ins; these are managed at the platform-level
+/object-cache.php
+/db.php
+
+# SQL files
+*.sql
+!.local/db_dumps/bare-local-db.sql
+
+# Ignore temporary OS files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# misc
+.phplint-cache
+.dccache
+
+# Hide personal files
+__*

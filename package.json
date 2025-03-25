@@ -1,0 +1,76 @@
+{
+    "name": "rv-starter",
+    "description": "RV Starter WordPress Site by Rareview hosted on WordPress VIP",
+    "author": "Rareview <hello@rareview.com>",
+    "license": "MIT",
+    "engineStrict": true,
+    "engines": {
+        "node": ">=20.0.0",
+        "npm": ">=10.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wpcomvip/rv-starter.git"
+    },
+    "homepage": "https://github.com/wpcomvip/rv-starter#readme",
+    "bugs": {
+        "url": "https://github.com/wpcomvip/rv-starter/issues"
+    },
+    "lint-staged": {
+        "themes/rv-starter/**/*.css": [
+            "npm run lint:theme:css"
+        ],
+        "themes/rv-starter/**/*.js": [
+            "npm run lint:theme:js"
+        ],
+        "themes/rv-starter/**/*.json": [
+            "npm run lint:theme:json"
+        ],
+        "*.php": [
+            "composer lint"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "scripts": {
+        "prepare": "husky install",
+        "env:init": "./.local/bin/dev-env.sh init",
+        "env:destroy": "./.local/bin/dev-env.sh destroy",
+        "env:start": "./.local/bin/dev-env.sh start",
+        "env:stop": "./.local/bin/dev-env.sh stop",
+        "env:exec": "./.local/bin/dev-env.sh exec",
+        "env:wp": "./.local/bin/dev-env.sh wp",
+        "env:log": "tail -f ./.local/site/log/debug.log",
+        "env:info": "./.local/bin/dev-env.sh info",
+        "env:db:import": "./.local/bin/dev-env.sh db-import",
+        "env:db:search-replace": "./.local/bin/dev-env.sh db-search-replace",
+        "setup": "npm run setup:php && npm run setup:js",
+        "setup:php": "composer install && composer install --working-dir=themes/rv-starter/",
+        "setup:js": "npm install && npm install --prefix themes/rv-starter",
+        "reset": "rm -drf node_modules themes/rv-starter/node_modules themes/rv-starter/vendor client-mu-plugins/vendor",
+        "build": "npm-run-all build:*",
+        "build:theme": "npm run build --prefix themes/rv-starter",
+        "start": "npm-run-all start:*",
+        "start:theme": "npm run start --prefix themes/rv-starter",
+        "dev": "npm-run-all dev:*",
+        "dev:theme": "npm run dev --prefix themes/rv-starter",
+        "lint": "npm-run-all lint:*:*",
+        "lint:theme:css": "npm run lint:css --prefix themes/rv-starter",
+        "lint:theme:js": "npm run lint:js --prefix themes/rv-starter",
+        "lint:theme:json": "npm run lint:json --prefix themes/rv-starter",
+        "lint:php:all": "composer lint; exit 0",
+        "format": "npm-run-all format:*:*",
+        "format:theme:css": "npm run format:css --prefix themes/rv-starter",
+        "format:theme:js": "npm run format:js --prefix themes/rv-starter",
+        "format:theme:json": "npm run format:json --prefix themes/rv-starter",
+        "format:php:all": "composer format; exit 0"
+    },
+    "devDependencies": {
+        "husky": "^9.0.11",
+        "lint-staged": "^15.2.2",
+        "npm-run-all2": "^5.0.0"
+    }
+}

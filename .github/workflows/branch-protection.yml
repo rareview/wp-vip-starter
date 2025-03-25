@@ -1,0 +1,17 @@
+name: Block child-theme into master
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  block_merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          if [[ "${{ github.head_ref }}" == "child-theme" ]]; then
+            echo "Merging child-theme into master is not allowed."
+            exit 1
+          fi
