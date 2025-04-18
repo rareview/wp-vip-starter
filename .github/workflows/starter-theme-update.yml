@@ -1,0 +1,67 @@
+name: Starter theme auto-update
+
+on:
+  repository_dispatch:
+    types: [ remote-update-trigger ]
+  push:
+    paths:
+      - '.github/workflows/starter-theme-update.yml'
+
+jobs:
+  self-destroy-check:
+    runs-on: ubuntu-latest
+    if: github.repository != 'rareview/wp-vip-starter' && github.event_name == 'push'
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: If this is a new project, self-destroy unnecessary WP VIP starter Github actions
+        run: |
+          echo "Self-destructing unnecessary WP VIP starter repo Github actions"
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git rm -f .github/workflows/starter-theme-update.yml || true
+          git commit -m "Remove WP VIP starter environment github actions" || echo "No changes to commit"
+          git push origin HEAD
+          exit 0
+
+  update-rv-starter:
+    runs-on: ubuntu-latest
+    if: github.repository == 'rareview/wp-vip-starter' && github.event_name == 'repository_dispatch'
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git User
+        run: |
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+      - name: Remove rv-starter folder, if exists
+        run: |
+          rm -rf themes/rv-starter
+
+      - name: Clone the whole rv-starter-theme repo
+        run: |
+          git clone https://x-access-token:${{ secrets.RV_STARTER_THEME_ACCESS }}@github.com/rareview/rv-starter-theme.git themes/rv-starter-theme
+
+      - name: Pick only the rv-starter theme, and move it to the /themes folder
+        run: |
+          cp -R themes/rv-starter-theme/wp-content/themes/rv-starter themes/
+
+      - name: Remove the cloned repo
+        run: |
+          rm -rf themes/rv-starter-theme
+
+      - name: Commit and push latest version of the starter theme
+        run: |
+          git add themes/rv-starter
+          git rm -r --cached themes/rv-starter-theme || true
+          git commit -m "Import latest version of RV starter theme" || echo "No changes to commit"
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.WP_VIP_STARTER_ACCESS }}
