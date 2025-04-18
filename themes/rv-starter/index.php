@@ -12,8 +12,7 @@ get_header(); ?>
 	<main class="rv-page-default" tabindex="-1">
 		<?php
 		if ( have_posts() ) :
-			while ( have_posts() ) :
-				the_post();
+			while ( have_posts() ) : the_post();
 
 				?>
 				<h1 class="rv-default__title rv-title"><?php echo wp_kses_post( get_the_title() ); ?></h1>
