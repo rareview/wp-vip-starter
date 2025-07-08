@@ -38,7 +38,7 @@
         "automattic/vip-go-mu-plugins": "dev-master",
         "automattic/vipwpcs": "^3.0",
         "wpackagist-plugin/debug-bar": "1.1.6",
-        "wpackagist-plugin/query-monitor": "3.15",
+        "wpackagist-plugin/query-monitor": "3.18",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "phpcompatibility/phpcompatibility-wp": "*",
         "roave/security-advisories": "dev-latest"
