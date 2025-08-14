@@ -66,11 +66,16 @@
         "format:theme:css": "npm run format:css --prefix themes/rv-starter",
         "format:theme:js": "npm run format:js --prefix themes/rv-starter",
         "format:theme:json": "npm run format:json --prefix themes/rv-starter",
-        "format:php:all": "composer format; exit 0"
+        "format:php:all": "composer format; exit 0",
+        "release": "commit-and-tag-version --no-verify"
     },
     "devDependencies": {
+        "@commitlint/cli": "^19.8.1",
+        "@commitlint/config-conventional": "^19.8.1",
+        "commit-and-tag-version": "^12.5.2",
         "husky": "^9.0.11",
         "lint-staged": "^15.2.2",
         "npm-run-all2": "^5.0.0"
-    }
+    },
+    "version": "1.0.0"
 }
