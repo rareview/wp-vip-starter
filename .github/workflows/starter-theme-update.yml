@@ -45,22 +45,22 @@ jobs:
         run: |
           rm -rf themes/rv-starter
 
-      - name: Clone the whole rv-starter-theme repo
+      - name: Clone the whole rareview-starter-theme repo
         run: |
-          git clone https://x-access-token:${{ secrets.RV_STARTER_THEME_ACCESS }}@github.com/rareview/rv-starter-theme.git themes/rv-starter-theme
+          git clone https://x-access-token:${{ secrets.RV_STARTER_THEME_ACCESS }}@github.com/rareview/rareview-starter-theme.git themes/rareview-starter-theme
 
       - name: Pick only the rv-starter theme, and move it to the /themes folder
         run: |
-          cp -R themes/rv-starter-theme/wp-content/themes/rv-starter themes/
+          cp -R themes/rareview-starter-theme/wp-content/themes/rv-starter themes/
 
       - name: Remove the cloned repo
         run: |
-          rm -rf themes/rv-starter-theme
+          rm -rf themes/rareview-starter-theme
 
       - name: Commit and push latest version of the starter theme
         run: |
           git add themes/rv-starter
-          git rm -r --cached themes/rv-starter-theme || true
+          git rm -r --cached themes/rareview-starter-theme || true
           git commit -m "Import latest version of RV starter theme" || echo "No changes to commit"
           git push origin master
         env:
