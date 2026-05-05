@@ -1,12 +1,12 @@
 /* stylelint-disable scale-unlimited/declaration-strict-value */
 @mixin input-text($background: "light") {
-	background-color: $color-input-bg-light-background;
-	border: 1px solid $color-input-bg-light-border;
-	border-radius: 5px;
-	color: $color-input-bg-light-text;
+	background-color: $input-light-background-color;
+	border: $input-field-border-width solid $input-light-border-color;
+	border-radius: $input-field-border-radius;
+	color: $input-light-text-color;
 	display: flex;
 	flex-wrap: wrap;
-	height: $default-input-field-height;
+	height: $input-field-height;
 	outline: none;
 	padding: 8px 10px;
 	margin-bottom: 16px;
@@ -16,13 +16,13 @@
 	/* States. */
 	&:disabled {
 		background-color: transparent;
-		border-color: $color-input-bg-light-disabled;
-		color: $color-input-bg-light-disabled;
+		border-color: $input-light-disabled-color;
+		color: $input-light-disabled-color;
 		cursor: no-drop;
 
 		&:focus,
 		&:active {
-			border-color: $color-input-bg-light-disabled;
+			border-color: $input-light-disabled-color;
 		}
 
 		&:hover {
@@ -32,7 +32,7 @@
 
 	&:focus,
 	&:active {
-		border-color: $color-primary !important;
+		border-color: color-mix(in srgb, $color-primary 50%, black) !important;
 	}
 
 	/* Dark background. */
