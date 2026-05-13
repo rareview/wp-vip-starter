@@ -1,6 +1,6 @@
 @mixin input-label($background: "light") {
-	color: $color-input-bg-light-text;
-	margin-bottom: 10px;
+	color: $input-light-text-color;
+	margin-bottom: 0.625rem;
 	display: inline-block;
 
 	/* Dark background. */
