@@ -1,30 +1,77 @@
-# RV Starter
+# Rareview Starter Theme
+
+![Rareview Starter Theme Banner](.local/docs/rv-starter-theme-banner.jpg)
+
+Modern WordPress starter theme for fast, scalable builds.
+- Based on the 10up Scaffold
+- Follows WP VIP coding standards and best practices
+- Supports WP VIP and WPE platforms
+- Supports fast global styles setup
+	- 130+ variables covering global styles
+	- One-command Figma global styles sync (beta)
+	- Gutenberg compatibility out of the box
+	- Fluid responsiveness out of the box
+	- Consistent appearance between frontend and block editor
+- Uses the latest PHP without fancy templating languages
+- Built with SEO and accessibility in mind
+- Translation-ready
+- And much more!
+
+## Requirements
+
+- PHP >= 8.2
+- Node >= 20
+- NPM >= 10
+- [Lando](https://lando.dev) v3.25.6+ (recommended)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Mac/Windows)
+
+## Clone a Repo
+
+- Create a new repository by using this repo as a template
+- Clone a newly created repo to your local machine
+  <br><br><img src="https://docs.github.com/assets/cb-76823/mw-1440/images/help/repository/use-this-template-button.webp" width="400">
+
+<hr>
+
+## Initial Setup
+After cloning your new repo locally, run the interactive setup script:
+
+```bash
+npm run setup
+```
+
+This handles all renaming, rebranding, and configuration automatically:
+- Renames the theme directory, translation files, and all references
+- Performs case-sensitive find-and-replace across all project files
+- Updates Lando config, deploy scripts, and CI workflows
+- Generates a project-specific `AGENTS.md` for AI-assisted development
+- Optionally runs `npm install` and `lando start`
+
+For CI or non-interactive use: `npm run setup -- --yes`
+To preview changes: `npm run setup -- --dry-run`
+
+<hr>
+
+## Global Styles Setup
+
+This starter theme relies on theme.json variables and SCSS variables and mixins to set up global styles.
+Run the design-system CLI command to choose how you want to configure them:
+
+```bash
+npm run design-system
+```
+
+You will see three options:
+
+1. **Set variables in the terminal**: Interactive prompts walk through variables setup.
+2. **Set variables manually**: Opens the variable mapping guide at `docs/variable-mapping.md`.
+3. **Figma auto sync (beta)**: Simply paste a Figma design URL and hit Enter. Extraction quality depends on the Figma design's consistency and structure.
+
+Setting up these variables will make most of the global elements such as headings, buttons, color palette etc. work out of the box, fluid responsive, Gutenberg compatible, looking same in frontend and editor, and easy to maintain and scale because everything comes from a single source of truth - variables and mixins.
+
 ___________________________________________________________
-**IMPORTANT:** Remove this section once you have read it and taken the necessary steps.
 
-This is a starter repository for WordPress VIP sites.
-
-First, create a new repository from this template and then clone it to your local machine.
-
-- Rename the `wp-content/themes/rv-starter` directory to the name of the site you are working on.
-- Rename the `wp-content/themes/rv-starter/languages/RVStarterTheme.pot` file the relevant name related to the site you are working on.
-- Rename `.circleci/config.tbd` to `.circleci/config.yml`.
-- Rename the files in the `config` directory to the relevant name related to the site you are working on.
-- Replace all the instances of `rv-starter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `RV Starter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `RVStarter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `RV_STARTER` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `rv_starter` (case sensitive) with the relevant name related to the site you are working on.
-- Replace all the instances of `TBD` (case sensitive) with the relevant information.
-- Replace `WEBSITE_NAME` below with the relevant information.
-- Replace `WEBSITE_URL` below with the relevant information.
-- Follow the instructions in the [Local Development Setup](.local/docs/local-development-setup.md) to set up your local development environment.
-- Follow the instructions in the [Deployment](.local/docs/deployment.md) to set up your deployment environment.
-___________________________________________________________
-
-This is the repository for WEBSITE_NAME WordPress Site hosted at WEBSITE_URL.
-
-## Local Development Setup
+## Local Environment Setup
 
 See [Local Development Setup](.local/docs/local-development-setup.md) for details.
 
@@ -32,6 +79,9 @@ See [Local Development Setup](.local/docs/local-development-setup.md) for detail
 
 See [Theme Development](.local/docs/theme-development.md) for details.
 
-## Deployment
+## License
 
-See [Deployment](.local/docs/deployment.md) for details.
+This repository includes mixed-licensed components:
+
+- WordPress core/upstream components: GPL (see `license.txt`)
+- Custom RV project code (scripts, tooling, and theme code): MIT (see `LICENSE.md` and `wp-content/themes/rv-starter/LICENSE.md`)

@@ -66,9 +66,15 @@
         "format:theme:css": "npm run format:css --prefix themes/rv-starter",
         "format:theme:js": "npm run format:js --prefix themes/rv-starter",
         "format:theme:json": "npm run format:json --prefix themes/rv-starter",
-        "format:php:all": "composer format; exit 0"
+        "format:php:all": "composer format; exit 0",
+        "design-system": "node scripts/design-system/design-system.mjs",
+        "create-block": "npm run --prefix themes/rv-starter create-block --",
+        "figma-sync": "sh -c 'node scripts/figma-sync/figma-sync.mjs \"$@\" && node scripts/figma-sync/figma-apply.mjs \"$@\"' --",
+        "figma-apply": "node scripts/figma-sync/figma-apply.mjs"
     },
     "devDependencies": {
+        "@inquirer/prompts": "^8.4.2",
+        "dotenv": "^17.2.3",
         "husky": "^9.0.11",
         "lint-staged": "^15.2.2",
         "npm-run-all2": "^5.0.0"

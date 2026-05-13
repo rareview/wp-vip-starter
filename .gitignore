@@ -51,3 +51,10 @@ Thumbs.db
 
 # Hide personal files
 __*
+
+# Figma-sync feature
+/scripts/figma-sync/generated/*
+!/scripts/figma-sync/generated/.gitkeep
+/scripts/figma-sync/fetched/*
+!/scripts/figma-sync/fetched/.gitkeep
+/scripts/figma-sync/.env
