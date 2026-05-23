@@ -37,7 +37,7 @@
     "require-dev": {
         "automattic/vip-go-mu-plugins": "dev-master",
         "automattic/vipwpcs": "^3.0",
-        "wpackagist-plugin/debug-bar": "1.1.6",
+        "wpackagist-plugin/debug-bar": "1.1.8",
         "wpackagist-plugin/query-monitor": "3.18",
         "dealerdirect/phpcodesniffer-composer-installer": "*",
         "phpcompatibility/phpcompatibility-wp": "*",
