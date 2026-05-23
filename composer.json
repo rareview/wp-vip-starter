@@ -32,7 +32,7 @@
     "require": {
         "php": ">= 8.2",
         "composer/installers": "^2.1",
-        "wpackagist-theme/twentytwentyfour": "1.1"
+        "wpackagist-theme/twentytwentyfour": "1.5"
     },
     "require-dev": {
         "automattic/vip-go-mu-plugins": "dev-master",
